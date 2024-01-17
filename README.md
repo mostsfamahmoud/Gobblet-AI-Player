@@ -11,7 +11,7 @@
 ## Introduction
 This is a project for the course of Artificial Intelligence at Ain Shams University.In this project, we implement the Gobblet game, an abstract strategy game played on a 4x4 grid. The game involves two players, each with twelve pieces that can nest on top of one another to create three stacks of four pieces.
 
-### Game Rules
+## Game Rules
 
 ### Objective
 
