@@ -59,8 +59,7 @@ The Gobblet Game is designed for ease of use, providing a seamless gaming experi
         - Player vs Player
         - Player vs PC
         - PC vs PC
-
-![menu](Resources/menu.jpg)
+    ![menu](Resources/menu.jpg)
 
 2. **Player vs Player:**
     - If you select Player vs Player, no additional options are needed. Enjoy the game directly with another player.
