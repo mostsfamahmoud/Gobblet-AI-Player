@@ -80,8 +80,7 @@ The Gobblet Game is designed for ease of use, providing a seamless gaming experi
         - The game screen includes the playing board and pieces, providing a clear visual representation of the ongoing game.
     ![Game Screen](Resources/GameScreen.jpg)
 6. **End of Game:**
-    - Upon completion of the game, the final screen will be displayed:
-        - This screen announces the winner of the game.
+    - Upon completion of the game, the final screen will announce the winner of the game.
 
 **Note:** The game is entirely controlled with mouse interactions, making it accessible and intuitive for players of all levels.
 
