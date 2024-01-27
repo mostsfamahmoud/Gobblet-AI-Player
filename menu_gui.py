@@ -163,6 +163,84 @@ class FirstGUI(Frame):
 
         # Continue the animation
         self.master.after(20, lambda: self.circular_motion_animation(time + 1))
+        class SecondGUI(Frame):
+    def __init__(self, master=None, app=None):
+        self.master = master
+        self.app = app
+        self.frame = Frame(self.master)
+        self.init_UI()
+
+
+    def init_UI(self):
+        self.master.title("Start Menu")
+        self.background_photo = PhotoImage(file="Images/Start_Background.png")
+        my_canvas = Canvas(self.frame, width=580, height=680)
+        my_canvas.pack(fill="both", expand=True)
+        my_canvas.create_image(0, 0, image=self.background_photo, anchor="nw")
+        my_canvas.create_text(290, 150, text="Game Difficulty", font=("Verdana", 30), fill="white")
+
+        self.slider = CTkSlider(master=my_canvas, from_=1, to=2, number_of_steps=3)
+        self.slider.place(x=190, y=250)
+
+        # Labels for difficulty levels
+        my_canvas.create_text(160, 255, text="Easy", font=("Verdana", 15), fill="white")
+
+        my_canvas.create_text(420, 255, text="Hard", font=("Verdana", 15), fill="white")
+        go_button = CTkButton(
+            master=my_canvas,
+            text="Go",
+            corner_radius=2,
+            border_color="#ffffff",
+            command=self.make_GobbletGUI,
+            width=100,
+            height=40,
+            font=("Verdana", 16),
+            border_width=2
+        )
+        go_button.place(x=230, y=350)
+
+        back_button = CTkButton(
+            master=my_canvas,
+            text="Back",
+            corner_radius=0,
+            border_color="white",
+            command=self.go_back,
+            width=100,
+            height=40,
+            fg_color="#cf3434",  # Set text color to black
+            font=("Verdana", 16),
+            border_width=2
+        )
+        back_button.place(x=10, y=10)
+
+
+        Label(self.frame, text="This is the Second GUI").pack()
+
+        # Bind the window close event to the close_window function
+        self.master.protocol("WM_DELETE_WINDOW", self.close_window)
+        
+    #def set_normal_PC_difficulty(self, difficulty)
+    def set_normal_PC_difficulty(self):
+        global Normal_PC_difficulty
+        Normal_PC_difficulty = round(self.slider.get())
+        
+    
+    def make_SecondGUI(self):
+        self.frame.pack()
+    
+    def go_back(self):
+        self.frame.pack_forget()
+        self.app.make_FirstGUI()
+
+    def make_GobbletGUI(self):
+            self.frame.pack_forget()
+            self.set_normal_PC_difficulty()
+            self.master.destroy()
+        
+    
+    def close_window(self):
+        # This function will be called when the window is closed
+        self.master.quit()
         
     def close_window(self):
         # This function will be called when the window is closed
