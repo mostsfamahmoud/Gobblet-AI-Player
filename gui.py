@@ -186,3 +186,70 @@ def buildBoard():
 
     window.after(50, lambda: update_gui(window,turn_label))  # Pass the window variable to update_gui
     window.mainloop()  # Start the Tkinter event loop
+def update_gui(window, turn_label):
+    # Update the game interface based on queued actions
+    # ...
+    global stop_threads
+    
+    if stop_threads:
+        return
+    if queue:
+        action, board = queue.pop(0)
+        game_result = board.check_for_win()
+
+        if game_result:  # winner
+            positions = game_result[2][:4]  # Extract first four positions if available
+            winnerColor = game_result[1]  # Extract the winner Color
+            markWinner(winnerColor, positions)
+            return
+
+        MovePiece(action, board)
+        update_turn_label(turn_label)
+
+    window.after(50, lambda: update_gui(window, turn_label))  # Pass the window variable to the next update
+
+
+
+def UpdateStack(color: str, stackIndex: int, newSize: int) -> None:
+    # Remove a piece from the stack on the UI
+    # ...
+
+    # Change
+
+    global image_dict
+
+    if newSize == VERY_LARGE:
+        if color == WHITE:
+            stacks[WHITE][stackIndex].config(image=image_dict['veryLarge_White_stack'])
+            stacks[WHITE][stackIndex].image = image_dict['veryLarge_White_stack']
+        else:
+            stacks[BLACK][stackIndex].config(image=image_dict['veryLarge_Black_stack'])
+            stacks[BLACK][stackIndex].image = image_dict['veryLarge_Black_stack']
+    elif newSize == LARGE:
+        if color == WHITE:
+            stacks[WHITE][stackIndex].config(image=image_dict['Large_White_stack'])
+            stacks[WHITE][stackIndex].image = image_dict['Large_White_stack']
+        else:
+            stacks[BLACK][stackIndex].config(image=image_dict['Large_Black_stack'])
+            stacks[BLACK][stackIndex].image = image_dict['Large_Black_stack']
+    elif newSize == MEDIUM:
+        if color == WHITE:
+            stacks[WHITE][stackIndex].config(image=image_dict['Medium_White_stack'])
+            stacks[WHITE][stackIndex].image = image_dict['Medium_White_stack']
+        else:
+            stacks[BLACK][stackIndex].config(image=image_dict['Medium_Black_stack'])
+            stacks[BLACK][stackIndex].image = image_dict['Medium_Black_stack']
+    elif newSize == SMALL:
+        if color == WHITE:
+            stacks[WHITE][stackIndex].config(image=image_dict['Small_White_stack'])
+            stacks[WHITE][stackIndex].image = image_dict['Small_White_stack']
+        else:
+            stacks[BLACK][stackIndex].config(image=image_dict['Small_Black_stack'])
+            stacks[BLACK][stackIndex].image = image_dict['Small_Black_stack']
+    elif newSize == NONE:
+        if color == WHITE:
+            stacks[WHITE][stackIndex].config(image=image_dict['EmptySquare_stack'])
+            stacks[WHITE][stackIndex].image = image_dict['EmptySquare_stack']
+        else:
+            stacks[BLACK][stackIndex].config(image=image_dict['EmptySquare_stack'])
+            stacks[BLACK][stackIndex].image = image_dict['EmptySquare_stack']
