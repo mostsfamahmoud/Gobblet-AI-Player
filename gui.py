@@ -253,3 +253,160 @@ def UpdateStack(color: str, stackIndex: int, newSize: int) -> None:
         else:
             stacks[BLACK][stackIndex].config(image=image_dict['EmptySquare_stack'])
             stacks[BLACK][stackIndex].image = image_dict['EmptySquare_stack']
+    
+def UpdateCell(cellIndex: Position, newSize: int, color: str) -> None:
+    # Change the appearance of a cell on the UI based on the piece size and color
+    index = cellIndex.row * GRID_DIMENSION + cellIndex.col
+    global image_dict
+
+    if newSize == VERY_LARGE:
+        if color == WHITE:
+            cells[index].config(image=image_dict['veryLarge_White_cell'])
+            cells[index].image = image_dict['veryLarge_White_cell']
+        else:
+            cells[index].config(image=image_dict['veryLarge_Black_cell'])
+            cells[index].image = image_dict['veryLarge_Black_cell']
+    elif newSize == LARGE:
+        if color == WHITE:
+            cells[index].config(image=image_dict['Large_White_cell'])
+            cells[index].image = image_dict['Large_White_cell']
+        else:
+            cells[index].config(image=image_dict['Large_Black_cell'])
+            cells[index].image = image_dict['Large_Black_cell']
+    elif newSize == MEDIUM:
+        if color == WHITE:
+            cells[index].config(image=image_dict['Medium_White_cell'])
+            cells[index].image = image_dict['Medium_White_cell']
+        else:
+            cells[index].config(image=image_dict['Medium_Black_cell'])
+            cells[index].image = image_dict['Medium_Black_cell']
+    elif newSize == SMALL:
+        if color == WHITE:
+            cells[index].config(image=image_dict['Small_White_cell'])
+            cells[index].image = image_dict['Small_White_cell']
+        else:
+            cells[index].config(image=image_dict['Small_Black_cell'])
+            cells[index].image = image_dict['Small_Black_cell']
+    elif newSize == NONE:
+        if color == WHITE:
+            cells[index].config(image=image_dict['EmptySquare_cell'])
+            cells[index].image = image_dict['EmptySquare_cell']
+        else:
+            cells[index].config(image=image_dict['EmptySquare_cell'])
+            cells[index].image = image_dict['EmptySquare_cell']
+
+
+def MovePiece(action: PieceAction, board: GameBoard):
+    # Apply actions (move pieces) on the game board and update the UI
+    # ...
+    srcCellPosition = action.src  # Get the Source Position
+    #i want to get color of piece that located on the source cell
+    if srcCellPosition.is_outside():
+        stackIndex = action.piece.stack_index
+        currentSize = action.piece.size
+        global newSize
+        if currentSize == VERY_LARGE:
+            newSize = LARGE
+        elif currentSize == LARGE:
+            newSize = MEDIUM
+        elif currentSize == MEDIUM:
+            newSize = SMALL
+        else:
+            newSize = NONE
+        # manipulate stack gui
+        UpdateStack(action.piece.color, stackIndex, newSize)
+
+    else:  # inside
+        newColor = None
+        srcNewSize = None
+        
+        if board.get_cell(srcCellPosition).stack.get_size() > 1:
+            srcNewSize = board.get_cell(srcCellPosition).stack.pieces[-2].size
+            newColor = board.get_cell(srcCellPosition).stack.pieces[-2].getColor()
+        else:
+            srcNewSize = NONE
+
+        UpdateCell(srcCellPosition, srcNewSize, newColor)
+
+    destCellPosition = action.dest
+    destNewSize = action.piece.size
+    newColor = action.piece.color
+
+
+    UpdateCell(destCellPosition, destNewSize, newColor)
+
+
+def disable_buttons():
+    # Disable game buttons
+    # ...
+
+    global cells
+    for cell in cells:
+        cell['state'] = 'disabled'
+    for listofbuttons in stacks.values():
+        for button in listofbuttons:
+            button['state'] = 'disabled'
+
+
+def enable_buttons():
+    # Enable game buttons
+    # ...
+
+    global cells
+    for cell in cells:
+        cell['state'] = 'normal'
+    for listofbuttons in stacks.values():
+        for button in listofbuttons:
+            button['state'] = 'normal'
+
+
+def show_winner_message(winner_name):
+    global main_window  # Use the global variable for the main window reference
+    splash_label = Label(main_window, text=f"{winner_name} wins!", font=('Helvetica', 40), fg='white', bg='green')
+    splash_label.pack()
+    splash_label.place(x=200, y=330)
+    # Adjust the time delay according to your preference
+    splash_label.after(100000, lambda: splash_label.destroy())
+    
+    
+def show_draw_message():
+    global main_window  # Use the global variable for the main window reference
+    splash_label = Label(main_window, text=f"Draw!", font=('Helvetica', 60), fg='white', bg='green')
+    splash_label.pack()
+    splash_label.place(x=230, y=680/2)
+    # Adjust the time delay according to your preference
+    splash_label.after(100000, lambda: splash_label.destroy())
+
+def update_turn_label(turn_label):
+    global current_turn
+    global prev_turn
+    global c_turn
+
+    if current_turn == PlayerTurn.BLACK:
+        turn_label.config(text="Yellow's Turn", fg='black')
+        current_turn = PlayerTurn.WHITE
+        c_turn = "W"
+        prev_turn = "B"
+        
+    else:
+        turn_label.config(text="Brown'sTurn", fg='black')
+        current_turn = PlayerTurn.BLACK
+        c_turn = "B"
+        prev_turn = "W"
+
+
+def markWinner(winner_color: str, positions: List[Position]):
+    global current_turn
+    global turn_label
+    # Mark the winning cells on the UI and display winner information
+    for pos in positions:
+        cells[pos.row * GRID_DIMENSION + pos.col].config(bg="green")
+    if current_turn == PlayerTurn.BLACK:
+        show_winner_message("Yellow")    
+        turn_label.config(text="  ", fg='white')
+
+    else:
+        show_winner_message("Brown")
+        turn_label.config(text="  ", fg='white')
+
+
