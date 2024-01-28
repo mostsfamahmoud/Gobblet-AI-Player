@@ -1,6 +1,6 @@
 from typing import Union
-from GameComponents.pieceCollection import *
-from GameComponents.pieceStack import PieceStack
+from pieceCollection import *
+from pieceStack import PieceStack
 
 
 class Cell:
@@ -9,19 +9,19 @@ class Cell:
         self.stack = cellStack
         self.position = cellPosition
 
-    def is_empty(self) -> bool:
+    def is_stack_empty(self) -> bool:
         # Check if the cell's stack is empty
-        return self.stack.is_empty()
+        return self.stack.is_stack_empty()
 
     def getCurrentColor(self) -> Union[str, None]:
         # Return the color of the top piece of the cell's stack (or None if the stack is empty)
-        if self.is_empty():
+        if self.is_stack_empty():
             return None
         return self.stack.top().getColor()
 
-    def add(self, new_piece: Piece) -> bool:
+    def add(self, piece: Piece) -> bool:
         # Add a piece to the cell's stack and return True if successful, False otherwise
-        return self.stack.add(new_piece)
+        return self.stack.add(piece)
 
     def top(self) -> Union[None, Piece]:
         # Return the top piece of the cell's stack (or None if the stack is empty)
@@ -46,7 +46,7 @@ if __name__ == "__main__":
     cell = Cell(stack, position)
 
     # Check if the cell's stack is empty (should be True at this point)
-    print(cell.is_empty())
+    print(cell.is_stack_empty())
 
     # Add piece1 to the cell's stack
     cell.add(piece1)

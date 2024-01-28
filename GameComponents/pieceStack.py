@@ -1,5 +1,5 @@
 from typing import Union, List
-from GameComponents.pieceCollection import Piece
+from pieceCollection import Piece
 
 
 class PieceStack:
@@ -10,17 +10,17 @@ class PieceStack:
         # Initialize the PiecesStack with a list of pieces or an empty list if None is provided
         self.pieces = pieces if pieces else []
 
-    def get_size(self) -> int:
+    def get_stack_size(self) -> int:
         # Return the number of pieces in the stack
         return len(self.pieces)
 
-    def is_empty(self) -> bool:
+    def is_stack_empty(self) -> bool:
         # Check if the stack is empty
         return not bool(self.pieces)
 
     def top(self) -> Union[None, Piece]:
         # Return the top piece of the stack if the stack is not empty
-        if not self.is_empty():
+        if not self.is_stack_empty():
             return self.pieces[-1]  # Accessing the last element in the list (top of the stack)
         return None
 
@@ -60,7 +60,7 @@ if __name__ == "__main__":
     stack.add(piece2)
 
     # Check the size of the stack
-    print(stack.get_size())  # This should print 2
+    print(stack.get_stack_size())  # This should print 2
 
     # Check the top piece in the stack
     print(stack.top())  # This should print the details of piece2
@@ -69,7 +69,7 @@ if __name__ == "__main__":
     stack.pop()
 
     # Check the size of the updated stack after removal
-    print(stack.get_size())  # This should print 1
+    print(stack.get_stack_size())  # This should print 1
 
     # Check the top piece in the updated stack
     print(stack.top())  # This should print the details of piece1

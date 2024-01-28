@@ -1,4 +1,9 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Dec 19 00:27:08 2018
 
+@author: Orion E. Eman
+"""
 from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
@@ -16,7 +21,12 @@ from typing import Tuple, List
 from PIL import ImageTk, Image
 from time import sleep
 from tkinter import Label
-
+from pieceCollection import *
+from gameBoard import GameBoard
+from gameState import GameState
+from time import sleep
+from globals import *
+import sys
 
 
 
@@ -25,7 +35,7 @@ from Players.human_player import HumanPlayer
 from Players.ai_player import AIPlayer
 from Heuristics.general_heuristic import general_heuristic
 from Heuristics.corners_heuristic import corners_heuristic
-from Heuristics.aggressive_heuristic import aggressive_heuristic
+
 menu_gui_open_flag = True
 # Global variables
 game_mode = NONE # Variable to store the game mode (Player vs Player, Player vs PC, PC vs PC)
@@ -163,6 +173,11 @@ class FirstGUI(Frame):
 
         # Continue the animation
         self.master.after(20, lambda: self.circular_motion_animation(time + 1))
+        
+    def close_window(self):
+        # This function will be called when the window is closed
+        self.master.quit()
+
 class SecondGUI(Frame):
     def __init__(self, master=None, app=None):
         self.master = master
@@ -242,9 +257,7 @@ class SecondGUI(Frame):
         # This function will be called when the window is closed
         self.master.quit()
         
-    def close_window(self):
-        # This function will be called when the window is closed
-        self.master.quit()
+        
 class ThirdGUI(Frame):
     def __init__(self, master=None, app=None):
         self.master = master
@@ -367,4 +380,3 @@ def main_start():
 
 if __name__ == '__main__':
     main_start()
-

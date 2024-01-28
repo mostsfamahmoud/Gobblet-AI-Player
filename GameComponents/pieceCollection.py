@@ -1,7 +1,5 @@
 # Import necessary classes and variables from other modules
 from globals import *
-
-
 # Constants: NONE = None, OUTSIDE = -1
 
 class Position:
@@ -68,8 +66,8 @@ class Piece:
         return self.position
 
     # Setters for some properties
-    def setSize(self, new_size):
-        self.size = new_size
+    def setSize(self, size):
+        self.size = size
 
     def setPosition(self, new_position):
         self.position = new_position
@@ -93,12 +91,12 @@ class Piece:
 # Example of Usage (CLASS Piece)
 
 # Create instances of Piece
-# Check if two pieces are equal
-if piece1 == piece2:
-    print("These pieces are equal.")
 piece1 = Piece(size=2, color='red', stack_index=0)
 piece2 = Piece(size=2, color='red', stack_index=0)
 
+# Check if two pieces are equal
+if piece1 == piece2:
+    print("These pieces are equal.")
 else:
     print("These pieces are not equal.")
 
@@ -111,9 +109,9 @@ print(piece1.getPosition())  # Output: (5,10)
 """
 
 
-class PieceMovement:
+class PieceAction:
     def __init__(self, piece: Piece, source: Position, destination: Position):
-        # Initialize an move with a piece, source, and destination positions
+        # Initialize an action with a piece, source, and destination positions
         self.piece = piece  # Private attribute for Piece object
         self.src = source  # Private attribute for source Position object
         self.dest = destination  # Private attribute for destination Position object
@@ -141,7 +139,7 @@ class PieceMovement:
     def __eq__(self, other):
         # Override the equality comparison for two Action objects
         return (
-                isinstance(other, PieceMovement)
+                isinstance(other, PieceAction)
                 and self.piece == other.piece
                 and self.src == other.src
                 and self.dest == other.dest
@@ -156,13 +154,13 @@ if __name__ == "__main__":
     source_position = Position(row=1, col=1)
     destination_position = Position(row=2, col=2)
 
-    # Create a PieceMovement instance
-    move1 = PieceMovement(piece1, source_position, destination_position)
+    # Create a PieceAction instance
+    action1 = PieceAction(piece1, source_position, destination_position)
 
     # Get attributes using getters
-    print(move1.getPiece())  # The String Representation of the Piece
-    print(move1.getSource())  # Output: (1, 1)
-    print(move1.getDestination())  # Output: (2, 2)
+    print(action1.getPiece())  # The String Representation of the Piece
+    print(action1.getSource())  # Output: (1, 1)
+    print(action1.getDestination())  # Output: (2, 2)
 
     # Create another Piece and Position
     piece2 = Piece(size=3, color='blue', stack_index=1)
@@ -170,11 +168,11 @@ if __name__ == "__main__":
     new_destination_position = Position(row=4, col=4)
 
     # Set attributes using setters
-    move1.setPiece(piece2)
-    move1.setSource(new_source_position)
-    move1.setDestination(new_destination_position)
+    action1.setPiece(piece2)
+    action1.setSource(new_source_position)
+    action1.setDestination(new_destination_position)
 
     # Get the updated attributes using getters
-    print(move1.getPiece())  # Output: The String Representation of the Piece
-    print(move1.getSource())  # Output: (3, 3)
-    print(move1.getDestination())  # Output: (4, 4)
+    print(action1.getPiece())  # Output: The String Representation of the Piece
+    print(action1.getSource())  # Output: (3, 3)
+    print(action1.getDestination())  # Output: (4, 4)

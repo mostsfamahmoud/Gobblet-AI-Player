@@ -6,12 +6,12 @@ from typing import Tuple, List
 from PIL import ImageTk, Image
 from time import sleep
 from tkinter import Label
-from GameComponents.pieceCollection import *
-from GameComponents.gameBoard import *
-from GameComponents.pieceCollection import PieceMovement
+from pieceCollection import *
+from gameBoard import *
 import menu_gui
 import sys
 import threading
+
 from enum import Enum, auto
 
 class PlayerTurn(Enum):
@@ -151,7 +151,7 @@ def buildBoard():
     # newGameButton = tk.Button(window, text="New Game", command=newGame)
     # newGameButton.place(x=500, y=15)
     # Create a label for displaying the current turn
-    turn_label = Label(window, text="Yellow's Turn", font=('Helvetica', 14), bg='white', fg='red')
+    turn_label = Label(window, text="Yellow's Turn", font=('Helvetica', 14), bg='white', fg='black')
     turn_label.place(x=50, y=50)
 
 
@@ -186,6 +186,8 @@ def buildBoard():
 
     window.after(50, lambda: update_gui(window,turn_label))  # Pass the window variable to update_gui
     window.mainloop()  # Start the Tkinter event loop
+
+
 def update_gui(window, turn_label):
     # Update the game interface based on queued actions
     # ...
@@ -253,7 +255,8 @@ def UpdateStack(color: str, stackIndex: int, newSize: int) -> None:
         else:
             stacks[BLACK][stackIndex].config(image=image_dict['EmptySquare_stack'])
             stacks[BLACK][stackIndex].image = image_dict['EmptySquare_stack']
-    
+
+
 def UpdateCell(cellIndex: Position, newSize: int, color: str) -> None:
     # Change the appearance of a cell on the UI based on the piece size and color
     index = cellIndex.row * GRID_DIMENSION + cellIndex.col
@@ -320,9 +323,9 @@ def MovePiece(action: PieceAction, board: GameBoard):
         newColor = None
         srcNewSize = None
         
-        if board.get_cell(srcCellPosition).stack.get_size() > 1:
-            srcNewSize = board.get_cell(srcCellPosition).stack.pieces[-2].size
-            newColor = board.get_cell(srcCellPosition).stack.pieces[-2].getColor()
+        if board.retrieve_cell_at_position(srcCellPosition).stack.get_stack_size() > 1:
+            srcNewSize = board.retrieve_cell_at_position(srcCellPosition).stack.pieces[-2].size
+            newColor = board.retrieve_cell_at_position(srcCellPosition).stack.pieces[-2].getColor()
         else:
             srcNewSize = NONE
 
@@ -389,7 +392,7 @@ def update_turn_label(turn_label):
         prev_turn = "B"
         
     else:
-        turn_label.config(text="Brown'sTurn", fg='black')
+        turn_label.config(text="Brown's Turn", fg='black')
         current_turn = PlayerTurn.BLACK
         c_turn = "B"
         prev_turn = "W"
@@ -408,5 +411,8 @@ def markWinner(winner_color: str, positions: List[Position]):
     else:
         show_winner_message("Brown")
         turn_label.config(text="  ", fg='white')
+    
+    
 
+    
 
